@@ -5,10 +5,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Hello! - Sarah jfijeifjweifjow </h1>
-        <img src={logo} className="App-logo" alt="logo" />
+        <h1>welcome to the landing page! </h1>
+        <img src={require(".//assets/logo_white.png")} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -16,7 +15,6 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
         </a>
       </header>
     </div>
