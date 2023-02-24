@@ -16,9 +16,10 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Existing_Users'
 mongo = PyMongo(app)
 
-@app.route('/userdata')
 # this is a simple API that returns User Information data
 # this will be called by the react front end
+@app.route('/userdata')
+
 def get_data():
     collection = mongo.db.userInfo
     data = []
