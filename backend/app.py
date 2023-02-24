@@ -5,8 +5,8 @@
 # pip install -r requirements.txt
 # activate 
 # .\myenv\Scripts\activate
-# flask run
-# http://localhost:5000/userdata to see data
+# flask run --port=8000
+# http://localhost:8000/userdata to see data
 
 from flask import Flask, jsonify
 from flask_pymongo import PyMongo
