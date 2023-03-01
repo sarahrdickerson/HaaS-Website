@@ -13,6 +13,10 @@ function App() {
 
   return (
     <div className="App">
+      {/* <header className="App-header">
+        <h1>Login Here!</h1>
+      </header> */}
+      <img src={logo} className="App-logo" alt="logo" />
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
       }
