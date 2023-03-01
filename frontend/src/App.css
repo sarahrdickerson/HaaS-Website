@@ -16,9 +16,15 @@
 }
 
 
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin 3s linear;
+  }
+}
+
 
 .App-header {
-  background-color: #282c34;
+  background-color: #353535;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

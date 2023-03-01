@@ -1,13 +1,16 @@
-import logo from './logo.svg';
+import logo from './assets/logo_white.png';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>welcome to the landing page! </h1>
-        <img src={require(".//assets/logo_white.png")} className="App-logo" alt="logo" />
-        <p>
+
+        <h1>Welcome to the Landing Page</h1>
+        <img src={logo} className="App-logo" alt="logo" />
+        {/* <p>
+          Edit <code>src/App.js</code> and save to reload.
+
         </p>
         <a
           className="App-link"
@@ -15,7 +18,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-        </a>
+  </a>*/}
       </header>
     </div>
   );
