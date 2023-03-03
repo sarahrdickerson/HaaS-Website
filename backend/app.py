@@ -8,25 +8,48 @@
 # flask run --port=8000
 # http://localhost:8000/userdata to see data
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
-
-app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Existing_Users'
+app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users'
 mongo = PyMongo(app)
 
 # this is a simple API that returns User Information data
 # this will be called by the react front end
 @app.route('/userdata')
-
-def get_data():
-    collection = mongo.db.userInfo
+def get_user_data():
+    collection = mongo.db.gabrielaperez
     data = []
 
     for document in collection.find():
-        data.append({'username is': document['userName'], 'userID is': document['userID'], 'password is': document['password']})
+        data.append({'userid is': document['userid'], 'password is': document['password']})
     return jsonify(data)
+
+
+# api for submitting new user data
+# defining the endpoint for application with HTTP method POST
+@app.route('/api/submit_new_user', methods=['POST'])
+def submit_new_user():
+    # process user data
+    user_data = request.get_json()
+    # example user_data
+    # {"username": "gabrielaperez","userid": gp,"password": ECE461L}
+    
+    # get the username, since the collection will be named after the user as shown in HW 4
+    collection_name = user_data['username']
+
+    # double check username doesn't already exist when they're trying to create a new account
+    if collection_name not in mongo.db.list_collection_names():
+        # create new collection named after new user   
+        mongo.db.create_collection(collection_name)
+    
+    result = mongo.db[collection_name].insert_one(user_data)
+
+    return jsonify({"message": "Data submitted successfully", "document_id": str(result.inserted_id)})
+
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
+
+
