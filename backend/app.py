@@ -59,7 +59,7 @@ def remove_user():
     if username in mongo.db.list_collection_names():
         # remove user from database
         mongo.db.drop_collection(username)
-        return jsonify({"success": True, "message": "User removed"})
+        return jsonify({"success": True, "message": "User " + str(username) + " removed"})
     else:
         return jsonify({"success": False, "message": "User does not exist"})
 
