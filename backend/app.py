@@ -46,7 +46,24 @@ def submit_new_user():
     
     result = mongo.db[collection_name].insert_one(user_data)
 
-    return jsonify({"message": "Data submitted successfully", "document_id": str(result.inserted_id)})
+    return jsonify({"success": True, "document_id": str(result.inserted_id)})
+
+# api for logging in users
+@app.route('/api/login', methods=['POST'])
+def login():
+    # get login data
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+
+    # check if username exists in database
+    if username in mongo.db.list_collection_names():
+        # check if password matches
+        if password == mongo.db[username].find_one()['password']:
+            return jsonify({"success": True, "message": "Login successful"})
+        else:
+            return jsonify({"success": False, "message": "Incorrect password"})
+    else:
+        return jsonify({"success": False, "message": "Username does not exist"})
 
 
 if __name__ == '__main__':
