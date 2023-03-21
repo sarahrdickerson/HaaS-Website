@@ -61,7 +61,7 @@ def remove_user():
         mongo.db.drop_collection(username)
         return jsonify({"success": True, "message": "User removed"})
     else:
-        return jsonify({"success": False, "message": "Username does not exist"})
+        return jsonify({"success": False, "message": "User does not exist"})
 
 # api for logging in users
 @app.route('/api/login', methods=['POST'])

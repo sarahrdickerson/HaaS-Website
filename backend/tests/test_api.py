@@ -46,6 +46,3 @@ def test_remove_user():
         }
         response = client.post('/api/remove_user', json=test_user_data)
         assert json.loads(response.data)['success'] == False
-
-
-test_remove_user()
