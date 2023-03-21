@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from '../api/axios.js';
 
 export const Register = (props) => {
     const [userName, setUserName] = useState('');
@@ -7,11 +8,19 @@ export const Register = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(userName);
-        // const response = await axios.post(
-        //     '/api/register',
-        //     JSON.stringify({userName, pass})
-        // );
+        console.log(userName);
+        axios.post(
+            '/api/submit_new_user',
+            {
+                username: userName,
+                userid: userID,
+                password: pass,
+            }
+        ).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     function validateForm() {
