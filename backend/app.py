@@ -46,7 +46,7 @@ def submit_new_user():
     
     result = mongo.db[collection_name].insert_one(user_data)
 
-    return jsonify({"message": "Data submitted successfully", "document_id": str(result.inserted_id)})
+    return jsonify({"success": True, "document_id": str(result.inserted_id)})
 
 # api for logging in users
 @app.route('api/login', methods=['POST'])
