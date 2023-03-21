@@ -2,7 +2,7 @@ import logo from './assets/logo_white.png';
 import './App.css';
 import {Login} from './containers/login.js';
 import {Register} from './containers/register.js';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
 function App() {
@@ -10,6 +10,10 @@ function App() {
   const toggleForm = (formName) => {
       setCurrentForm(formName)
   }
+
+  useEffect(() => {
+    document.title = currentForm === 'login' ? 'Team Sprinters | Login' : 'Team Sprinters | Register';
+  }, [currentForm]);
 
   return (
     <div className="App">
