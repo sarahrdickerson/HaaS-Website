@@ -188,6 +188,7 @@ QDarkStyle==2.8.1
 QtAwesome @ file:///tmp/build/80754af9/qtawesome_1615991616277/work
 qtconsole @ file:///tmp/build/80754af9/qtconsole_1616775094278/work
 QtPy==1.9.0
+react-router-dom==6.9.0
 regex @ file:///opt/concourse/worker/volumes/live/e81f6b8c-e3b5-481b-6b5d-4fa8d9bb9405/volume/regex_1617569701251/work
 requests @ file:///tmp/build/80754af9/requests_1608241421344/work
 rope @ file:///tmp/build/80754af9/rope_1602264064449/work

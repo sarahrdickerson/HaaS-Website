@@ -3,6 +3,7 @@ import './App.css';
 import {Login} from './containers/login.js';
 import {Register} from './containers/register.js';
 import React, {useEffect, useState} from "react";
+import { Dashboard } from './screens/dashboard';
 
 
 function App() {
