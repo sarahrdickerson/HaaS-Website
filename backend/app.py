@@ -49,7 +49,7 @@ def submit_new_user():
     return jsonify({"success": True, "document_id": str(result.inserted_id)})
 
 # api for logging in users
-@app.route('api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     # get login data
     username = request.get_json()['username']
