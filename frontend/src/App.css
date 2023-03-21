@@ -75,10 +75,19 @@ button {
   color: #284B63;
 }
 
+.action-btn {
+  transition: 0.5s;
+}
+
+.action-btn:hover {
+  background-color: #D9D9D9;
+}
+
 .link-btn {
   background: none;
   color: white;
   text-decoration: underline;
+  
 }
 
 @media (prefers-reduced-motion: no-preference) {
