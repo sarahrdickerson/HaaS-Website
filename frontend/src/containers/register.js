@@ -5,9 +5,13 @@ export const Register = (props) => {
     const [userID, setUserID] = useState('');
     const [pass, setPass] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(userName);
+        // console.log(userName);
+        // const response = await axios.post(
+        //     '/api/register',
+        //     JSON.stringify({userName, pass})
+        // );
     }
 
     function validateForm() {
