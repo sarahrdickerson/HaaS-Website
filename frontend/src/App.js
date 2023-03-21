@@ -16,7 +16,9 @@ function App() {
       {/* <header className="App-header">
         <h1>Login Here!</h1>
       </header> */}
-      <img src={logo} className="App-logo" alt="logo" />
+      <div className="logo-container">
+        <img src={logo} className="App-logo" alt="logo" />
+      </div>
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
       }
