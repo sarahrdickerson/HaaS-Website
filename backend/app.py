@@ -43,10 +43,11 @@ def submit_new_user():
     if collection_name not in mongo.db.list_collection_names():
         # create new collection named after new user   
         mongo.db.create_collection(collection_name)
+        result = mongo.db[collection_name].insert_one(user_data)
+        return jsonify({"success": True, "document_id": str(result.inserted_id)})
+    else
+        return jsonify({"success": False, "message": "Username already exists"})
     
-    result = mongo.db[collection_name].insert_one(user_data)
-
-    return jsonify({"success": True, "document_id": str(result.inserted_id)})
 
 # api for logging in users
 @app.route('/api/login', methods=['POST'])

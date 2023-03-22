@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import axios from '../api/axios.js';
 
@@ -22,7 +22,15 @@ export const Register = (props) => {
                 password: pass,
             }
         ).then((response) => {
-            response.status === 200 ? window.location.href = '/dashboard' : console.log(response);
+            if(response.data['success'] === true) {
+                window.location.href = '/dashboard';
+            } else if (response.data['message'] === 'Username already exists') {
+                alert('User already exists');
+                window.location.href = '/';
+            } else {
+                alert('Something went wrong');
+                window.location.href = '/';
+            }
         }).catch((error) => {
             console.log(error);
         });
