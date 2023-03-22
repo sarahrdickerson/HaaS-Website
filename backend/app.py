@@ -45,7 +45,7 @@ def submit_new_user():
         mongo.db.create_collection(collection_name)
         result = mongo.db[collection_name].insert_one(user_data)
         return jsonify({"success": True, "document_id": str(result.inserted_id)})
-    else
+    else:
         return jsonify({"success": False, "message": "Username already exists"})
     
 
