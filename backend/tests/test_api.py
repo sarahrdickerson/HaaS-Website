@@ -32,3 +32,17 @@ def test_login():
         }
         response = client.post('/api/login', json=test_user_data)
         assert json.loads(response.data)['success'] == False
+
+def test_remove_user():
+    with app.test_client() as client:
+        test_user_data = {
+            "username":"gabyperez"
+        }
+        response = client.post('/api/remove_user', json=test_user_data)
+        assert json.loads(response.data)['success'] == True
+
+        test_user_data = {
+            "username": "srd2729"
+        }
+        response = client.post('/api/remove_user', json=test_user_data)
+        assert json.loads(response.data)['success'] == False
