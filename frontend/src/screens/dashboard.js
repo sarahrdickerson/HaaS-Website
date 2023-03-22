@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-export const Dashboard = (props) => {
+const Dashboard = () => {
 
     return(
         <div className="dashboard-container">
@@ -8,3 +8,5 @@ export const Dashboard = (props) => {
         </div>
     )
 }
+
+export default Dashboard;

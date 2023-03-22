@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { redirect } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from '../api/axios.js';
 
 export const Register = (props) => {
@@ -6,9 +8,12 @@ export const Register = (props) => {
     const [userID, setUserID] = useState('');
     const [pass, setPass] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         console.log(userName);
+        const btn = document.querySelector('.action-btn');
+        btn.innerHTML = 'Registering...';
+        btn.setAttribute('disabled', true);
         axios.post(
             '/api/submit_new_user',
             {
@@ -17,7 +22,7 @@ export const Register = (props) => {
                 password: pass,
             }
         ).then((response) => {
-            console.log(response);
+            response.status === 200 ? window.location.href = '/dashboard' : console.log(response);
         }).catch((error) => {
             console.log(error);
         });

@@ -6,7 +6,7 @@
   #284B63 - dark blue
  */
  
-.App {
+.entry {
   text-align: center;
   display: flex;
   min-height: 100vh;
@@ -19,7 +19,7 @@
   flex-direction: row;
 }
 
-.App-logo {
+.entry-logo {
   position: absolute;
   top: 0;
   left: 0;
@@ -91,7 +91,7 @@ button {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
+  .entry-logo {
     animation: App-logo-spin 3s linear;
   }
 }
