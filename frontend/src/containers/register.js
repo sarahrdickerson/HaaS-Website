@@ -23,20 +23,18 @@ export const Register = (props) => {
                 password: pass,
             }
         ).then((response) => {
-            if(response.data['success'] === true) {
+            if (response.data['success'] === true) {
                 window.location.href = '/dashboard';
-            } else if (response.data['message'] === 'Username already exists') {
-                //alert('User already exists');
-                setErrorMessage('Username already exists. Please attempt with a different username.')
-                //window.location.href = '/';
+            }
+            else {
+                if (response.data['message'] === 'Username already exists') {
+                    setErrorMessage('Username already exists. Please attempt with a different username.')                    
+                }
+                else {
+                    setErrorMessage('Something went wrong. Please try again.')
+                }
                 btn.removeAttribute('disabled')
                 btn.innerHTML = 'Register'
-            } else {
-                //alert('Something went wrong');
-                setErrorMessage('Something went wrong. Please try again.')
-                //window.location.href = '/';
-                btn.removeAttribute('disabled')
-                btn.innerHTML = 'Log In'
             }
         }).catch((error) => {
             console.log(error);
@@ -50,17 +48,17 @@ export const Register = (props) => {
     return (
         <div className="auth-form-container">
             <h2>Register</h2>
-        <form className="register-form" onSubmit={handleSubmit}>
-            <label htmlFor="username">Username</label>
-                <input value={userName} onChange={(e) => setUserName(e.target.value)}type="username" placeholder="username" id="username" name="username" />
+            <form className="register-form" onSubmit={handleSubmit}>
+                <label htmlFor="username">Username</label>
+                <input value={userName} onChange={(e) => setUserName(e.target.value)} type="username" placeholder="username" id="username" name="username" />
                 <label htmlFor="user-id">User ID</label>
-                <input value={userID} onChange={(e) => setUserID(e.target.value)}type="user-id" placeholder="user id" id="user-id" name="user-id" />
+                <input value={userID} onChange={(e) => setUserID(e.target.value)} type="user-id" placeholder="user id" id="user-id" name="user-id" />
                 <label htmlFor="password">Password</label>
                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <button className="action-btn" type="create-account" disabled={!validateForm()} >Register</button>
-        </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
-    </div>
+            </form>
+            <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
+        </div>
     )
 }
