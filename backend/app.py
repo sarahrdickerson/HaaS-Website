@@ -55,14 +55,20 @@ def login():
     # get login data
     username = request.get_json()['username']
     password = request.get_json()['password']
+    userid = request.get_json()['userid']
 
     # check if username exists in database
     if username in mongo.db.list_collection_names():
-        # check if password matches
-        if password == mongo.db[username].find_one()['password']:
-            return jsonify({"success": True, "message": "Login successful"})
+        # check if userid matches
+        if userid == mongo.db[username].find_one()['userid']:
+            # check if password matches
+            if password == mongo.db[username].find_one()['password']:
+                return jsonify({"success": True, "message": "Login successful"})
+            else:
+                return jsonify({"success": False, "message": "Incorrect password"})
         else:
-            return jsonify({"success": False, "message": "Incorrect password"})
+            # userid doesnt match
+            return jsonify({"success": False, "message": "Incorrect User ID"})
     else:
         return jsonify({"success": False, "message": "Username does not exist"})
 
