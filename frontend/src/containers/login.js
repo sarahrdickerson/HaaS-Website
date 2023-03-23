@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from '../api/axios.js';
 
 export const Login = (props) => {
     const [userName, setUserName] = useState('');
@@ -8,6 +9,30 @@ export const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(userName);
+        const btn = document.querySelector('.action-btn');
+        btn.innerHTML = 'Logging in...';
+        btn.setAttribute('disabled', true);
+        axios.post(
+            '/api/login',
+            {
+                username: userName,
+                userid: userID,
+                password: pass
+            }
+        ).then((response) => {
+            if(response.data['success'] === true) {
+                // hardcoded URL port since backend is running on port 8000, could run into response issues
+                window.location.href = 'http://localhost:3000/dashboard';
+            } 
+            else if(response.data['message'] === 'Incorrect password') {
+                alert('Incorrect password. Try again')
+            }
+            else if(response.data['message'] === 'Username does not exist'){
+                alert('Username does not exist. Please register an account')
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     function validateForm() {
