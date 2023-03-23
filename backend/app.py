@@ -38,6 +38,7 @@ def submit_new_user():
     
     # get the username, since the collection will be named after the user as shown in HW 4
     collection_name = user_data['username']
+    user_id = user_data['userid']
 
     # double check username doesn't already exist when they're trying to create a new account
     if collection_name not in mongo.db.list_collection_names():
