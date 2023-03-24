@@ -28,9 +28,9 @@ const ProjectsPage = () => {
         <div align='center'>
             View your projects here!
         </div>
-        {/* <div>
+        <div>
             <Projects />
-        </div> */}
+        </div>
     </>
     )
 }
