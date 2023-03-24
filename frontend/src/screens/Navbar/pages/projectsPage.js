@@ -25,11 +25,11 @@ const ProjectsPage = () => {
                 </NavMenu>
             </Nav>
         </div>
-        <div align='center'>
+        {/* <div align='center'>
             View your projects here!
-        </div>
+        </div> */}
         {/* <div>
-            <Projects />
+            Hello
         </div> */}
     </>
     )
