@@ -27,6 +27,14 @@
   width: 20vmin;
 }
 
+.dashboard-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20vmin;
+  width: 20vmin;
+}
+
 .auth-form-container, .login-form, .register-form {
   display: flex;
   flex-direction: column;
