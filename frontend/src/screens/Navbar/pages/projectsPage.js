@@ -1,19 +1,17 @@
-import React from "react";
-// import axios from '../api/axios.js';
 import {
     Nav,
     NavLink,
     Bars,
     NavMenu,
-} from './navbarElements'
-import logo from '../../assets/logo_white.png';
+} from '../navbarElements'
+import logo from '../../../assets/logo_white.png';
+import Projects from './projectsContainers/Projects'
 
-const Dashboard = () => { 
-    // var currentUser = ""   
-    return(
-        <><div>
-            <Nav>
-                <Bars />
+const ProjectsPage = () => {
+    return (
+        <>
+        <div><Nav>
+            <Bars />
                 <NavMenu>
                     <NavLink to='/dashboard' activeStyle>
                         <img src={logo} className="dashboard-logo" alt="logo" />
@@ -26,12 +24,15 @@ const Dashboard = () => {
                     </NavLink>
                 </NavMenu>
             </Nav>
-        </div><div>
-                <h1 align='center'>
-                    Hello 
-                </h1>
-            </div></>
+        </div>
+        <div align='center'>
+            View your projects here!
+        </div>
+        {/* <div>
+            <Projects />
+        </div> */}
+    </>
     )
 }
 
-export default Dashboard;
+export default ProjectsPage

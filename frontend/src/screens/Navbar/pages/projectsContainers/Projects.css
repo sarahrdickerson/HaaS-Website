@@ -1,0 +1,18 @@
+.projects-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.projects-container {
+    border: 1px solid #000000;
+    padding: 10px;
+    margin: 20px;
+    width: 65%;
+}
+
+.projects-container h1 {
+    font-size: 30px;
+    margin: 20px;
+}

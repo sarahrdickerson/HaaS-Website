@@ -1,0 +1,11 @@
+.project-users {
+    margin-left: 10px;
+}
+
+.project-users button {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #888888
+}

@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import Entry from './screens/entry';
 import Dashboard from './screens/Navbar/dashboard';
-import DashboardProjects from './screens/Navbar/pages/projects'
+import DashboardProjects from './screens/Navbar/pages/projectsPage'
 import DashboardSettings from './screens/Navbar/pages/settings'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 

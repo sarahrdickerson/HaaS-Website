@@ -3,7 +3,7 @@ import {
     NavLink,
     Bars,
     NavMenu,
-} from '../NavbarElements'
+} from '../navbarElements'
 import logo from '../../../assets/logo_white.png';
 
 const Settings = () => {

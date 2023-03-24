@@ -1,0 +1,19 @@
+.button {
+    border-radius: 0px;
+    background-color: gray;
+    color: #000;
+    text-transform: none;
+}
+
+.textfield {
+    width: 100px;
+}
+
+.hw-set {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.hw-set h3 {
+    width: 165px;
+}
