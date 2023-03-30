@@ -23,7 +23,7 @@ export const Login = (props) => {
         ).then((response) => {
             if (response.data['success'] === true) {
                 // hardcoded URL port since backend is running on port 8000, could run into response issues
-                window.location.href = 'http://localhost:3001/dashboard';
+                window.location.href = '/dashboard';
             }
             else {
                 if (response.data['message'] === 'Incorrect password') {
