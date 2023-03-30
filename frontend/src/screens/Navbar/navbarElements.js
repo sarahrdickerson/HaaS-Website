@@ -1,6 +1,8 @@
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../../assets/logo_white.png';
+
 
 export const Nav = styled.nav`
   background: radial-gradient(circle at center, #3C6E71 50%, #2f5a76, #284B63);
@@ -54,4 +56,26 @@ export const NavMenu = styled.div`
     display: none;
   }
 `;
-  
+
+const NavBarElements = () => {
+  return (
+    <div>
+            <Nav>
+                <Bars />
+                <NavMenu>
+                    <NavLink to='/dashboard' activeStyle>
+                        <img src={logo} className="dashboard-logo" alt="logo" />
+                    </NavLink>
+                    <NavLink to='/projects' activeStyle>
+                        Projects
+                    </NavLink>
+                    <NavLink to='/settings' activeStyle>
+                        Settings
+                    </NavLink>
+                </NavMenu>
+            </Nav>
+        </div>
+  )
+}
+
+export default NavBarElements
