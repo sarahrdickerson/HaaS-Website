@@ -12,14 +12,33 @@ from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users'
-mongo = PyMongo(app)
+# app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users'
+mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
+mongo1 = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
+
+
+@app.route('/createProject', methods=['POST'])
+def create_project():
+    project_data = request.get_json()
+    # example project_data
+    # {"project_name": "ece319k project", "project_id":"4y7e8wt" }
+    project_name = project_data['project_name']
+    project_id = project_data['project_id']
+
+    if project_name not in mongo1.db.list_collection_names():
+        # create new collection after project
+        mongo1.db.create_collection(project_name)
+        result = mongo1.db[project_name].insert_one(project_data)
+        return jsonify({"success":True})
+    else:
+        return jsonify({"success":False})
+
 
 # this is a simple API that returns User Information data
 # this will be called by the react front end
 @app.route('/userdata')
 def get_user_data():
-    collection = mongo.db.gabrielaperez
+    collection = mongo.db.abhaysamant
     data = []
 
     for document in collection.find():
