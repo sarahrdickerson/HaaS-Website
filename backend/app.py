@@ -17,7 +17,7 @@ mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp1
 mongo1 = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
 
 
-@app.route('/createProject', methods=['POST'])
+@app.route('/api/createProject', methods=['POST'])
 def create_project():
     project_data = request.get_json()
     # example project_data
@@ -26,12 +26,12 @@ def create_project():
     project_id = project_data['project_id']
 
     if project_name not in mongo1.db.list_collection_names():
-        # create new collection after project
+        # check if project id exists already
         mongo1.db.create_collection(project_name)
         result = mongo1.db[project_name].insert_one(project_data)
         return jsonify({"success":True})
     else:
-        return jsonify({"success":False})
+        return jsonify({"success":False, "message": "project name already exists"})
 
 
 # this is a simple API that returns User Information data
