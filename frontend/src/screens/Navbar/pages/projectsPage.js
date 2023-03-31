@@ -5,8 +5,8 @@ import {
     NavMenu,
 } from '../navbarElements'
 import logo from '../../../assets/logo_white.png';
-import Projects from './projectsContainers/Projects'
 import NavBarElements from '../navbarElements';
+import PromptProjects from './projects';
 
 const ProjectsPage = () => {
     return (
@@ -16,7 +16,7 @@ const ProjectsPage = () => {
             View your projects here!
         </div>
         <div>
-            <Projects />
+            <PromptProjects />
         </div>
     </>
     )
