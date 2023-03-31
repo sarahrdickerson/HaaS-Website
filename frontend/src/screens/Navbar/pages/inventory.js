@@ -56,7 +56,7 @@ const handleCheckOut = (set, input) => {
       <div>
         <h3>Hardware Set 1</h3>
         <p>Availability: {hwSet1Availability}/100</p>
-        <input
+        <input className="inventory-container"
           type="number"
           min="0"
           max="100"

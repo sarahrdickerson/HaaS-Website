@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './projects.css';
 import TextField from '@material-ui/core/TextField'
 import Button from '@mui/material/Button';
-import Inventory from './inventory';
+import Inventory from './inventory.js';
 
 function PromptProjects() {
   const [clicked, setClicked] = useState(false);
@@ -51,6 +51,7 @@ function PromptProjects() {
         <br />
         <h1> <b>Create Project</b></h1>
         <TextField id="standard-basic" label="Enter Project ID" variant="standard" className="center-textfield" />
+        <TextField id="standard-basic" label="Enter Project Name" variant="standard" className="center-textfield" />
         <div className="button-container">
           <h1>
             <Button
