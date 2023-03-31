@@ -13,9 +13,19 @@ from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
-mongo1 = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
+mongo_projects = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
 
+# join project API
+@app.route('/api/joinProject', methods=['POST'])
+def join_project():
+    project_data = request.get_json()
+    project_id = project_data['project_id']
 
+    if project_id in mongo_projects.db.list_collection_names():
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False})
+# create project API
 @app.route('/api/createProject', methods=['POST'])
 def create_project():
     project_data = request.get_json()
@@ -23,9 +33,9 @@ def create_project():
     # {"project_name": "ece319k project", "project_id":"4y7e8wt" }
     project_id = project_data['project_id']
 
-    if project_id not in mongo1.db.list_collection_names():
-        mongo1.db.create_collection(project_id)
-        mongo1.db[project_id].insert_one(project_data)
+    if project_id not in mongo_projects.db.list_collection_names():
+        mongo_projects.db.create_collection(project_id)
+        mongo_projects.db[project_id].insert_one(project_data)
         return jsonify({"success":True})
     else:
         return jsonify({"success":False, "message": "project id already exists"})
