@@ -12,7 +12,6 @@ from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
-# app.config['MONGO_URI'] = 'mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users'
 mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
 mongo1 = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
 
@@ -22,16 +21,14 @@ def create_project():
     project_data = request.get_json()
     # example project_data
     # {"project_name": "ece319k project", "project_id":"4y7e8wt" }
-    project_name = project_data['project_name']
     project_id = project_data['project_id']
 
-    if project_name not in mongo1.db.list_collection_names():
-        # check if project id exists already
-        mongo1.db.create_collection(project_name)
-        result = mongo1.db[project_name].insert_one(project_data)
+    if project_id not in mongo1.db.list_collection_names():
+        mongo1.db.create_collection(project_id)
+        mongo1.db[project_id].insert_one(project_data)
         return jsonify({"success":True})
     else:
-        return jsonify({"success":False, "message": "project name already exists"})
+        return jsonify({"success":False, "message": "project id already exists"})
 
 
 # this is a simple API that returns User Information data

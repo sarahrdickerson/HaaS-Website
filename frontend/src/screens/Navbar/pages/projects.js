@@ -25,13 +25,9 @@ function PromptProjects() {
         if (response.data["success"] === true) {
           setShowInventory(true);
         } else {
-          if (response.data["message"] === "project name already exists") {
+          if (response.data["message"] === "project id already exists") {
             setErrorMessage(
-              "Project name already exists. Please attempt with a different name."
-            );
-          } else if (response.data["message"] === "projectid already exists") {
-            setErrorMessage(
-              "Project ID already exists. Please attempt with a different Project ID"
+              "Project ID already exists. Please attempt with a different ID."
             );
           }
         }
