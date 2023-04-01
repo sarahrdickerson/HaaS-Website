@@ -1,24 +1,64 @@
 import React, { useState } from "react";
-import '../../../App.css';
-import TextField from '@material-ui/core/TextField'
-import Button from '@mui/material/Button';
-import Inventory from './inventory.js';
+import "./projects.css";
+import TextField from "@material-ui/core/TextField";
+import Button from "@mui/material/Button";
+import Inventory from "./inventory.js";
+import axios from "../../../api/axios";
 
 function PromptProjects() {
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
-  const [newProjectID, setNewProjectID] = useState('');
-  const [projectID, setProjectID] = useState('');
-  const [projectName, setProjectName] = useState('');
+  const [projectName, setProjectName] = useState("");
+  const [projectID, setProjectID] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleClick = () => {
-    if (clicked) {
-      setShowInventory(true);
-    }
-    setClicked(!clicked);
+  const handleCreateClick = () => {
+    const btn = document.querySelector(".create-button");
+    btn.innerHTML = "Creating...";
+    btn.setAttribute("disabled", true);
+    axios
+      .post("/api/createProject", {
+        project_name: projectName,
+        project_id: projectID,
+      })
+      .then((response) => {
+        if (response.data["success"] === true) {
+          setShowInventory(true);
+        } else {
+          if (response.data["message"] === "project id already exists") {
+            setErrorMessage(
+              "Project ID already exists. Please attempt with a different Project ID."
+            );
+            btn.removeAttribute('disabled')
+            btn.innerHTML = 'Create'
+          }
+        }
+      });
   };
 
-  const containerClass = clicked ? "project-container-clicked" : "project-container";
+  const handleJoinClick = () => {
+    const joinbtn = document.querySelector(".join-button");
+    joinbtn.innerHTML = "Joining...";
+    joinbtn.setAttribute("disabled", true);
+    axios
+    .post("/api/joinProject", {
+      project_name: projectName,
+      project_id: projectID,
+    })
+    .then((response) => {
+      if (response.data["success"] === true) {
+        setShowInventory(true);
+      } else {
+        if (response.data["success"] === false) {
+          setErrorMessage(
+            "Project not found. Please enter a different Project ID or create a new Project."
+          );
+          joinbtn.removeAttribute('disabled')
+          joinbtn.innerHTML = 'Join'
+        }
+      }
+    });
+  }
 
   if (showInventory) {
     return <Inventory />;
@@ -27,55 +67,78 @@ function PromptProjects() {
   return (
     <div className="projects-container-wrapper">
       <div className="projects-container">
-        <h1> <b>Join Project</b></h1>
-        <input value={projectID} onChange={(e) => setProjectID(e.target.value)} type="projectID" placeholder="Enter Project ID" id="projectID" name="projectID"></input>
+        <h1>
+          <b>Join Project</b>
+        </h1>
+        <TextField
+          id="standard-basic"
+          label="Enter Project ID"
+          variant="standard"
+          className="center-textfield"
+          onChange={(event) => setProjectID(event.target.value)}
+        />
         <div className="button-container">
           <h1>
             <Button
-              className="button"
+              className="join-button"
               sx={{
-                backgroundColor: 'lightgray',
-                color: 'black',
-                textTransform: 'none',
-                borderRadius: '0',
-                width: '100px',
-                height: '50px',
-                fontSize: '1.2rem',
-                marginLeft: '8px',
-                fontWeight: 'bold',
-                textAlign: 'center'
+                backgroundColor: "lightgray",
+                color: "black",
+                textTransform: "none",
+                borderRadius: "0",
+                width: "100px",
+                height: "50px",
+                fontSize: "1.2rem",
+                marginLeft: "8px",
+                fontWeight: "bold",
+                textAlign: "center",
               }}
-              onClick={handleClick}
+              onClick={handleJoinClick}
             >
-              {clicked ? "Joining..." : "Join"}
+              Join
             </Button>
           </h1>
         </div>
         <br />
-        <h1> <b>Create Project</b></h1>
-        <input value={newProjectID} onChange={(e) => setNewProjectID(e.target.value)} type="projectID" placeholder="Enter Project ID" id="projectID" name="projectID"></input>
-        <input value={projectName} onChange={(e) => setProjectName(e.target.value)} type="projectName" placeholder="Enter Project Name" id="projectName" name="projectName"></input>
+        <h1>
+          <b>Create Project</b>
+        </h1>
+        <TextField
+          id="standard-basic"
+          label="Enter Project ID"
+          variant="standard"
+          className="center-textfield"
+          onChange={(event) => setProjectID(event.target.value)}
+        />
+        <TextField
+          id="standard-basic"
+          label="Enter Project Name"
+          variant="standard"
+          className="center-textfield"
+          onChange={(event) => setProjectName(event.target.value)}
+        />
         <div className="button-container">
           <h1>
             <Button
-              className="button"
+              className="create-button"
               sx={{
-                backgroundColor: 'lightgray',
-                color: 'black',
-                textTransform: 'none',
-                borderRadius: '0',
-                width: '100px',
-                height: '50px',
-                fontSize: '1.2rem',
-                marginLeft: '8px',
-                fontWeight: 'bold'
+                backgroundColor: "lightgray",
+                color: "black",
+                textTransform: "none",
+                borderRadius: "0",
+                width: "100px",
+                height: "50px",
+                fontSize: "1.2rem",
+                marginLeft: "8px",
+                fontWeight: "bold",
               }}
-              onClick={handleClick}
+              onClick={handleCreateClick}
             >
-              {clicked ? "Creating..." : "Create"}
+              Create
             </Button>
           </h1>
         </div>
+        {errorMessage && <p>{errorMessage}</p>}
       </div>
     </div>
   );
