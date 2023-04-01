@@ -14,6 +14,30 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
 mongo_projects = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
+mongo_HWSet = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
+
+# HW set1 get availability
+@app.route('/api/get_HWSet1')
+def get_avail_HWSet1():
+    collection = mongo_HWSet.db.HWSet1
+    data = []
+
+    for document in collection.find():
+        data.append({'availability_HWSet1': document['available'], 'capacity_HWSet1 ': 100})
+    return jsonify(data)
+
+# HW set1 set availability
+@app.route('/api/set_HWSet1', methods=['POST'])
+def set_avail_HWSet1():
+    HWSet1_data = request.get_json()
+    HWSet1_avail = HWSet1_data['available']
+    print("Updating availability to:", HWSet1_avail)
+    result = mongo_HWSet.db.HWSet1.updateOne(
+        {'name': 'HWSet1'},
+        {'$set': {'available': HWSet1_avail}}
+    )
+    print(result)
+    return jsonify({"message": "Availability updated successfully"})
 
 # join project API
 @app.route('/api/joinProject', methods=['POST'])
@@ -98,6 +122,7 @@ def login():
             return jsonify({"success": False, "message": "Incorrect User ID"})
     else:
         return jsonify({"success": False, "message": "Username does not exist"})
+
 
 
 if __name__ == '__main__':
