@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './projects.css';
+import '../../../App.css';
 import TextField from '@material-ui/core/TextField'
 import Button from '@mui/material/Button';
 import Inventory from './inventory.js';
@@ -7,6 +7,9 @@ import Inventory from './inventory.js';
 function PromptProjects() {
   const [clicked, setClicked] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
+  const [newProjectID, setNewProjectID] = useState('');
+  const [projectID, setProjectID] = useState('');
+  const [projectName, setProjectName] = useState('');
 
   const handleClick = () => {
     if (clicked) {
@@ -25,7 +28,7 @@ function PromptProjects() {
     <div className="projects-container-wrapper">
       <div className="projects-container">
         <h1> <b>Join Project</b></h1>
-        <TextField id="standard-basic" label="Enter Project ID" variant="standard" className="center-textfield" />
+        <input value={projectID} onChange={(e) => setProjectID(e.target.value)} type="projectID" placeholder="Enter Project ID" id="projectID" name="projectID"></input>
         <div className="button-container">
           <h1>
             <Button
@@ -50,8 +53,8 @@ function PromptProjects() {
         </div>
         <br />
         <h1> <b>Create Project</b></h1>
-        <TextField id="standard-basic" label="Enter Project ID" variant="standard" className="center-textfield" />
-        <TextField id="standard-basic" label="Enter Project Name" variant="standard" className="center-textfield" />
+        <input value={newProjectID} onChange={(e) => setNewProjectID(e.target.value)} type="projectID" placeholder="Enter Project ID" id="projectID" name="projectID"></input>
+        <input value={projectName} onChange={(e) => setProjectName(e.target.value)} type="projectName" placeholder="Enter Project Name" id="projectName" name="projectName"></input>
         <div className="button-container">
           <h1>
             <Button
