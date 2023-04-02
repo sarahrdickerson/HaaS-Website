@@ -51,10 +51,15 @@ function Inventory() {
             checkinbtn.removeAttribute('disabled')
             checkinbtn.innerHTML = 'Check In'
           }
+          if(response.data['message'] === "invalid value"){
+            set_hwset1_Message("Sorry, you can't check in " + input + " hardware. Try again with a number above 0.")
+            checkinbtn.removeAttribute('disabled')
+            checkinbtn.innerHTML = 'Check In'
+          }
         }
       })
     }
-    if(set === "hwset2") {
+    if(set === "hwSet2") {
       console.log("not working")
       const checkinbtn2 = document.querySelector(".hwset2-checkin-button");
       checkinbtn2.innerHTML = "Checking in..."
@@ -65,13 +70,18 @@ function Inventory() {
       .then((response) => {
         if(response.data['success'] === true){
           setHwSet2Availability((prev) => prev + parseInt(input));
-          set_hwset2_Message("Succesfully checked in " + input + " hardware into Hardware Set 2")
+          set_hwset2_Message("Succesfully checked in " + input + " hardware into Hardware Set 2.")
           checkinbtn2.removeAttribute('disabled')
           checkinbtn2.innerHTML = 'Check In'
         }
         else if (response.data['success'] === false) {
           if(response.data['message'] === "qty checked in exceeds capacity"){
             set_hwset2_Message(input + " hardware exceeds Hardware Set 2 capacity. Please try again.")
+            checkinbtn2.removeAttribute('disabled')
+            checkinbtn2.innerHTML = 'Check In'
+          }
+          if(response.data['message'] === "invalid value"){
+            set_hwset2_Message("Sorry, you can't check in " + input + " hardware. Try again with a number above 0.")
             checkinbtn2.removeAttribute('disabled')
             checkinbtn2.innerHTML = 'Check In'
           }
@@ -106,13 +116,18 @@ function Inventory() {
             checkoutbtn.removeAttribute('disabled')
             checkoutbtn.innerHTML = 'Check Out'
           }
+          if(response.data['message'] === "invalid value"){
+            set_hwset1_Message("Sorry, you can't check out " + input + " hardware. Try again with a number above 0.")
+            checkinbtn1.removeAttribute('disabled')
+            checkinbtn1.innerHTML = 'Check In'
+          }
         }
       })
     }
     if(set === "hwSet2") {
       console.log("not working")
       const checkoutbtn2 = document.querySelector(".hwset2-checkout-button");
-      checkoutbtn2.innerHTML = "Checking in..."
+      checkoutbtn2.innerHTML = "Checking out..."
       checkoutbtn2.setAttribute("disabled", true)
       axios.post("/api/checkout_HWSet2", {
         qty: input
@@ -129,6 +144,11 @@ function Inventory() {
             set_hwset2_Message(input + " hardware exceeds Hardware Set 2 availability. Please try again.")
             checkoutbtn2.removeAttribute('disabled')
             checkoutbtn2.innerHTML = 'Check Out'
+          }
+          if(response.data['message'] === "invalid value"){
+            set_hwset2_Message("Sorry, you can't check out " + input + " hardware. Try again with a number above 0.")
+            checkinbtn2.removeAttribute('disabled')
+            checkinbtn2.innerHTML = 'Check In'
           }
         }
       })
