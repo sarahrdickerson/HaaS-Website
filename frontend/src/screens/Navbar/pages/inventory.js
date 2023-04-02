@@ -177,9 +177,6 @@ function Inventory() {
 
   return (
     <>
-      <div>
-        <NavBarElements />
-      </div>
       <div className="inventory-container">
         <h1 className="inventory-container">Inventory</h1>
         <div>
