@@ -15,7 +15,7 @@ const Settings = () => {
         <div>
           <NavBarElements/>  
           <h1>
-            Settings
+            Profile
           </h1>
           <p>Username: {userName}</p>
           <p>User ID: {userId}</p>

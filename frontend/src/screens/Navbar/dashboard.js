@@ -11,7 +11,7 @@ const Dashboard = () => {
     return(
         <div>
             <NavBarElements/>
-            <h1>Welcome, {userName}</h1>
+            <h1 align="center" >Welcome, {userName}!</h1>
         </div>
     )
 }
