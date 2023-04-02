@@ -17,7 +17,7 @@ mongo_projects = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluste
 mongo_HWSet = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
 @app.route('/api/availability')
-def get_HWSet1_availability():
+def get_availability():
     HWSet1_collection = mongo_HWSet.db['HWSet1']
     HWSet1_document = HWSet1_collection.find_one({})
     HWSet1_curr_available = HWSet1_document['available']
