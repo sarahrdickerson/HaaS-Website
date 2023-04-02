@@ -22,6 +22,7 @@ function PromptProjects() {
         project_name: projectName,
         project_id: projectID,
         users: [localStorage.getItem("username")],
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {
