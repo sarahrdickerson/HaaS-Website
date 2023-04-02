@@ -162,13 +162,19 @@ def join_project():
 @app.route('/api/createProject', methods=['POST'])
 def create_project():
     data = request.get_json()
-    # example project_data
-    # {"project_name": "ece319k project", "project_id":"4y7e8wt" }
-    project_id = data['project_id']
 
+    project_name = data['project_name']
+    project_id = data['project_id']
+    users = data['users']
+
+    project_data = {
+        "project_name": project_name,
+        "project_id": project_id,
+        "users": users
+    }
     if project_id not in mongo_projects.db.list_collection_names():
         mongo_projects.db.create_collection(project_id)
-        mongo_projects.db[project_id].insert_one(data)
+        mongo_projects.db[project_id].insert_one(project_data)
 
         username = data['username']
         user_collection = mongo.db[username]
