@@ -109,26 +109,26 @@ function Inventory() {
         }
       })
     }
-    if(set === "hwset2") {
+    if(set === "hwSet2") {
       console.log("not working")
-      const checkinbtn2 = document.querySelector(".hwset2-checkin-button");
-      checkinbtn2.innerHTML = "Checking in..."
-      checkinbtn2.setAttribute("disabled", true)
-      axios.post("/api/checkin_HWSet2", {
+      const checkoutbtn2 = document.querySelector(".hwset2-checkout-button");
+      checkoutbtn2.innerHTML = "Checking in..."
+      checkoutbtn2.setAttribute("disabled", true)
+      axios.post("/api/checkout_HWSet2", {
         qty: input
       })
       .then((response) => {
         if(response.data['success'] === true){
-          setHwSet2Availability((prev) => prev + parseInt(input));
-          set_hwset2_Message("Succesfully checked in " + input + " hardware into Hardware Set 2")
-          checkinbtn2.removeAttribute('disabled')
-          checkinbtn2.innerHTML = 'Check In'
+          setHwSet2Availability((prev) => prev - parseInt(input));
+          set_hwset2_Message("Succesfully checked out " + input + " hardware from Hardware Set 2")
+          checkoutbtn2.removeAttribute('disabled')
+          checkoutbtn2.innerHTML = 'Check Out'
         }
         else if (response.data['success'] === false) {
-          if(response.data['message'] === "qty checked in exceeds capacity"){
-            set_hwset2_Message(input + " hardware exceeds Hardware Set 2 capacity. Please try again.")
-            checkinbtn2.removeAttribute('disabled')
-            checkinbtn2.innerHTML = 'Check In'
+          if(response.data['message'] === "qty checked out exceeds available hardware"){
+            set_hwset2_Message(input + " hardware exceeds Hardware Set 2 availability. Please try again.")
+            checkoutbtn2.removeAttribute('disabled')
+            checkoutbtn2.innerHTML = 'Check Out'
           }
         }
       })
@@ -223,7 +223,22 @@ function Inventory() {
         >
           Check In
         </button>
-        <button onClick={() => handleCheckOut("hwSet2", hwSet2Input)}>
+        <button
+          className="hwset2-checkout-button"
+          sx={{
+            backgroundColor: 'lightgray',
+            color: 'black',
+            textTransform: 'none',
+            borderRadius: '0',
+            width: '100px',
+            height: '50px',
+            fontSize: '1.2rem',
+            marginLeft: '8px',
+            fontWeight: 'bold',
+            textAlign: 'center'
+          }}
+          onClick={() => handleCheckOut("hwSet2", hwSet2Input)}
+        >
           Check Out
         </button>
       </div>

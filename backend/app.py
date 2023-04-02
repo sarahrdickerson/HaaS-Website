@@ -53,7 +53,6 @@ def checkout_HWSet1():
     collection = mongo_HWSet.db['HWSet1']
     document = collection.find_one({})
     current_availability = int(document['available'])
-    current_capacity = int(document['capacity'])
     
     if (qty > (current_availability)):
         return jsonify({"success":False, "message": "qty checked out exceeds available hardware"})
@@ -79,7 +78,21 @@ def checkin_HWSet2():
         collection.update_one({}, {'$set': {'available': qty + current_availability}})
         return jsonify({"success": True, "message":"hardware has been checked in"})
     
-
+@app.route('/api/checkout_HWSet2', methods=['POST'])
+def checkout_HWSet2():
+    HWSet2_data = request.get_json()
+    qty = int(HWSet2_data['qty'])
+    collection = mongo_HWSet.db['HWSet2']
+    document = collection.find_one({})
+    current_availability = int(document['available'])
+    
+    if (qty > (current_availability)):
+        return jsonify({"success":False, "message": "qty checked out exceeds available hardware"})
+    else:
+        # does not exceed can proceed and update availability
+        collection.update_one({}, {'$set': {'available': current_availability - qty}})
+        return jsonify({"success": True, "message":"hardware has been checked out"})
+    
 # HW set1 get availability
 @app.route('/api/get_HWSet1')
 def get_avail_HWSet1():
