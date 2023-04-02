@@ -1,0 +1,58 @@
+.inventory-container {
+    border:black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inventory-container h1 {
+    font-size: 30px;
+    margin: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+  
+  
+  .inventory-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inventory-section p {
+    font-weight: bold;
+  }
+  
+  .inventory-section input[type="number"] {
+    margin: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+  }
+  
+  .inventory-section button {
+    margin: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .inventory-section button:hover {
+    background-color: #0062cc;
+  }
+  
+  .error-message {
+    color: red;
+    margin: 10px;
+  }
