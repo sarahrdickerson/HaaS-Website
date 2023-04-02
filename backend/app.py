@@ -34,6 +34,8 @@ def get_availability():
 def checkin_HWSet1():
     HWSet1_data = request.get_json()
     qty = int(HWSet1_data['qty'])
+    if(qty <= 0):
+        return jsonify({"success":False, "message": "invalid value"})
     collection = mongo_HWSet.db['HWSet1']
     document = collection.find_one({})
     current_availability = int(document['available'])
@@ -50,6 +52,8 @@ def checkin_HWSet1():
 def checkout_HWSet1():
     HWSet1_data = request.get_json()
     qty = int(HWSet1_data['qty'])
+    if(qty <= 0):
+        return jsonify({"success":False, "message": "invalid value"})
     collection = mongo_HWSet.db['HWSet1']
     document = collection.find_one({})
     current_availability = int(document['available'])
@@ -66,6 +70,8 @@ def checkout_HWSet1():
 def checkin_HWSet2():
     HWSet2_data = request.get_json()
     qty = int(HWSet2_data['qty'])
+    if(qty <= 0):
+        return jsonify({"success":False, "message": "invalid value"})
     collection = mongo_HWSet.db['HWSet2']
     document = collection.find_one({})
     current_availability = int(document['available'])
@@ -82,6 +88,8 @@ def checkin_HWSet2():
 def checkout_HWSet2():
     HWSet2_data = request.get_json()
     qty = int(HWSet2_data['qty'])
+    if(qty <= 0):
+        return jsonify({"success":False, "message": "invalid value"})
     collection = mongo_HWSet.db['HWSet2']
     document = collection.find_one({})
     current_availability = int(document['available'])
