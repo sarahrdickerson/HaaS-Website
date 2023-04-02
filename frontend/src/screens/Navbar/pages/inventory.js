@@ -64,6 +64,11 @@ function Inventory() {
       const checkinbtn2 = document.querySelector(".hwset2-checkin-button");
       checkinbtn2.innerHTML = "Checking in..."
       checkinbtn2.setAttribute("disabled", true)
+      if(input === ''){
+        set_hwset2_Message("Please enter a valid number to check out.")
+        checkinbtn2.removeAttribute('disabled')
+        checkinbtn2.innerHTML = 'Check In'
+      }
       axios.post("/api/checkin_HWSet2", {
         qty: input
       })
@@ -118,8 +123,8 @@ function Inventory() {
           }
           if(response.data['message'] === "invalid value"){
             set_hwset1_Message("Sorry, you can't check out " + input + " hardware. Try again with a number above 0.")
-            checkinbtn1.removeAttribute('disabled')
-            checkinbtn1.innerHTML = 'Check In'
+            checkoutbtn.removeAttribute('disabled')
+            checkoutbtn.innerHTML = 'Check Out'
           }
         }
       })
@@ -129,6 +134,11 @@ function Inventory() {
       const checkoutbtn2 = document.querySelector(".hwset2-checkout-button");
       checkoutbtn2.innerHTML = "Checking out..."
       checkoutbtn2.setAttribute("disabled", true)
+      if(input === ''){
+        set_hwset2_Message("Please enter a valid number to check out.")
+        checkoutbtn2.removeAttribute('disabled')
+        checkoutbtn2.innerHTML = 'Check Out'
+      }
       axios.post("/api/checkout_HWSet2", {
         qty: input
       })
@@ -147,8 +157,8 @@ function Inventory() {
           }
           if(response.data['message'] === "invalid value"){
             set_hwset2_Message("Sorry, you can't check out " + input + " hardware. Try again with a number above 0.")
-            checkinbtn2.removeAttribute('disabled')
-            checkinbtn2.innerHTML = 'Check In'
+            checkoutbtn2.removeAttribute('disabled')
+            checkoutbtn2.innerHTML = 'Check Out'
           }
         }
       })
