@@ -186,6 +186,21 @@ def submit_new_user():
         return jsonify({"success": False, "message": "Username already exists"})
     
 
+# api for removing a user from database
+# NOTE: not password protected, so anyone can remove a user without their password
+@app.route('/api/remove_user', methods=['POST'])
+def remove_user():
+    # get username
+    username = request.get_json()['username']
+
+    # check if username exists in database
+    if username in mongo.db.list_collection_names():
+        # remove user from database
+        mongo.db.drop_collection(username)
+        return jsonify({"success": True, "message": "User " + str(username) + " removed"})
+    else:
+        return jsonify({"success": False, "message": "User does not exist"})
+
 # api for logging in users
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -208,10 +223,6 @@ def login():
             return jsonify({"success": False, "message": "Incorrect User ID"})
     else:
         return jsonify({"success": False, "message": "Username does not exist"})
-
-
-
+      
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
-
-
