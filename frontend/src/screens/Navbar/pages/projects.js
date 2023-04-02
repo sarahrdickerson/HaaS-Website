@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./projects.css";
+// import "./projects.css";
 import TextField from "@material-ui/core/TextField";
 import Button from "@mui/material/Button";
 import Inventory from "./inventory.js";
@@ -48,6 +48,7 @@ function PromptProjects() {
       .then((response) => {
         if (response.data["success"] === true) {
           setShowInventory(true);
+          window.location.href = "/inventory";
         } else {
           if (response.data["success"] === false) {
             setErrorMessage(
@@ -91,7 +92,7 @@ function PromptProjects() {
                 fontSize: "1.2rem",
                 marginLeft: "8px",
                 fontWeight: "bold",
-                textAlign: "center",
+                textAlign: "center"
               }}
               onClick={handleJoinClick}
             >

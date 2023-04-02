@@ -5,6 +5,7 @@ import Entry from './screens/entry';
 import Dashboard from './screens/Navbar/dashboard';
 import DashboardProjects from './screens/Navbar/pages/projectsPage'
 import DashboardSettings from './screens/Navbar/pages/settings'
+import Invetory from './screens/Navbar/pages/inventory'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<DashboardProjects />} />
         <Route path="/settings" element={<DashboardSettings />} />
+        <Route path="/inventory" element={<Invetory />} />
       </Routes>
     </BrowserRouter>
   );
