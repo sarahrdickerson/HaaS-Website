@@ -16,6 +16,37 @@ mongo = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp1
 mongo_projects = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Projects')
 mongo_HWSet = PyMongo(app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
+@app.route('/api/availability')
+def get_availability():
+    HWSet1_collection = mongo_HWSet.db['HWSet1']
+    HWSet1_document = HWSet1_collection.find_one({})
+    HWSet1_curr_available = HWSet1_document['available']
+
+    HWSet2_collection = mongo_HWSet.db['HWSet2']
+    HWSet2_document = HWSet2_collection.find_one({})
+    HWSet2_curr_available = HWSet2_document['available']
+    return jsonify({
+        "success":True,
+        "HWSet1_available": HWSet1_curr_available,
+        "HWSet2_available": HWSet2_curr_available})
+
+@app.route('/api/checkin_HWSet1', methods=['POST'])
+def checkin_HWSet1():
+    HWSet1_data = request.get_json()
+    qty = int(HWSet1_data['qty'])
+    collection = mongo_HWSet.db['HWSet1']
+    document = collection.find_one({})
+    current_availability = int(document['available'])
+    current_capacity = int(document['capacity'])
+
+    if (qty > (current_capacity - current_availability)):
+        return jsonify({"success":False, "message": "qty checked in exceeds capacity"})
+    else:
+        # does not exceed can proceed and update availability
+        collection.update_one({}, {'$set': {'available': qty + current_availability}})
+        return jsonify({"success": True, "message":"hardware has been checked in"})
+    
+
 # HW set1 get availability
 @app.route('/api/get_HWSet1')
 def get_avail_HWSet1():
