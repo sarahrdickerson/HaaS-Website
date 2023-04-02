@@ -24,6 +24,8 @@ export const Login = (props) => {
             if (response.data['success'] === true) {
                 // hardcoded URL port since backend is running on port 8000, could run into response issues
                 window.location.href = '/dashboard';
+                localStorage.setItem('username', userName);
+                localStorage.setItem('userId', userID);
             }
             else {
                 if (response.data['message'] === 'Incorrect password') {

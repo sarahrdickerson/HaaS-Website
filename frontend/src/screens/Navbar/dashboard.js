@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NavBarElements from "./navbarElements";
 
 const Dashboard = () => { 
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        setUserName(localStorage.getItem("username"));
+    }, []);
+
     return(
-        <NavBarElements/>
+        <div>
+            <NavBarElements/>
+            <h1>Welcome, {userName}</h1>
+        </div>
     )
 }
 

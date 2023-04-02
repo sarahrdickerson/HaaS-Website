@@ -11,6 +11,7 @@ function PromptProjects() {
   const [projectName, setProjectName] = useState("");
   const [projectID, setProjectID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [userName, setUserName] = useState("");
 
   const handleCreateClick = () => {
     const btn = document.querySelector(".create-button");
@@ -20,9 +21,11 @@ function PromptProjects() {
       .post("/api/createProject", {
         project_name: projectName,
         project_id: projectID,
+        users: [localStorage.getItem("username")],
       })
       .then((response) => {
         if (response.data["success"] === true) {
+          setUserName(localStorage.getItem("username"));
           setShowInventory(true);
         } else {
           if (response.data["message"] === "project id already exists") {
@@ -44,9 +47,11 @@ function PromptProjects() {
       .post("/api/joinProject", {
         project_name: projectName,
         project_id: projectID,
+        user_id: localStorage.getItem("username"),
       })
       .then((response) => {
         if (response.data["success"] === true) {
+          setUserName(localStorage.getItem("username"));
           setShowInventory(true);
           window.location.href = "/inventory";
         } else {

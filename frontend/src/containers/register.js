@@ -24,6 +24,8 @@ export const Register = (props) => {
             }
         ).then((response) => {
             if (response.data['success'] === true) {
+                localStorage.setItem('username', userName);
+                localStorage.setItem('userId', userID);
                 window.location.href = '/dashboard';
             }
             else {
