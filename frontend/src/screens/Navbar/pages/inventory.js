@@ -7,7 +7,8 @@ function Inventory() {
   const [hwSet2Availability, setHwSet2Availability] = useState(null);
   const [hwSet1Input, setHwSet1Input] = useState("");
   const [hwSet2Input, setHwSet2Input] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+  
 
   useEffect(() => {
     async function fetchAvailability() {
@@ -23,26 +24,36 @@ function Inventory() {
   }, []);
 
   const handleCheckIn = (set, input) => {
-    const capacity = set === "hwSet1" ? 100 : 100; // Update capacity as needed
-    const availability = set === "hwSet1" ? hwSet1Availability : hwSet2Availability;
-    if (parseInt(input) > capacity - availability) {
-      setErrorMessage(`Please try again with a lower quantity (capacity: ${capacity}, availability: ${availability})`);
-      return;
+    if(set === "hwSet1") {
+      const checkinbtn = document.querySelector(".hwset1-checkin-button");
+      checkinbtn.innerHTML = "Checking in..."
+      checkinbtn.setAttribute("disabled", true)
+      axios.post("/api/checkin_HWSet1", {
+        qty: input
+      })
+      .then((response) => {
+        if(response.data['success'] === true){
+          setHwSet1Availability((prev) => prev + parseInt(input));
+          setMessage("Succesfully checked in " + input + " hardware")
+          checkinbtn.removeAttribute('disabled')
+          checkinbtn.innerHTML = 'Check In'
+        }
+        else if (response.data['success'] === false) {
+          if(response.data['message'] === "qty checked in exceeds capacity"){
+            setMessage(input + " hardware exceeds capacity. Please try again.")
+            checkinbtn.removeAttribute('disabled')
+            checkinbtn.innerHTML = 'Check In'
+          }
+        }
+      })
     }
-    if (set === "hwSet1") {
-      setHwSet1Availability((prev) => prev + parseInt(input));
-      setHwSet1Input("");
-    } else {
-      setHwSet2Availability((prev) => prev + parseInt(input));
-      setHwSet2Input("");
-    }
-    setErrorMessage("");
+    
   };
 
   const handleCheckOut = (set, input) => {
     const availability = set === "hwSet1" ? hwSet1Availability : hwSet2Availability;
     if (parseInt(input) > availability) {
-      setErrorMessage(`Not enough available, please enter a lower quantity (availability: ${availability})`);
+      setMessage(`Not enough available, please enter a lower quantity (availability: ${availability})`);
       return;
     }
     if (set === "hwSet1") {
@@ -52,7 +63,7 @@ function Inventory() {
       setHwSet2Availability((prev) => prev - parseInt(input));
       setHwSet2Input("");
     }
-    setErrorMessage("");
+    setMessage("");
   };
 
 
@@ -78,7 +89,7 @@ function Inventory() {
           onChange={handleHwSet1InputChange}
         />
         <button
-          className="checkin-button"
+          className="hwset1-checkin-button"
           sx={{
             backgroundColor: 'lightgray',
             color: 'black',
@@ -116,7 +127,7 @@ function Inventory() {
           Check Out
         </button>
       </div>
-      {errorMessage && <p>{errorMessage}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
 }

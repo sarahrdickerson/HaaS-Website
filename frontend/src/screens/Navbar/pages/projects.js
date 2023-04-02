@@ -41,23 +41,23 @@ function PromptProjects() {
     joinbtn.innerHTML = "Joining...";
     joinbtn.setAttribute("disabled", true);
     axios
-    .post("/api/joinProject", {
-      project_name: projectName,
-      project_id: projectID,
-    })
-    .then((response) => {
-      if (response.data["success"] === true) {
-        setShowInventory(true);
-      } else {
-        if (response.data["success"] === false) {
-          setErrorMessage(
-            "Project not found. Please enter a different Project ID or create a new Project."
-          );
-          joinbtn.removeAttribute('disabled')
-          joinbtn.innerHTML = 'Join'
+      .post("/api/joinProject", {
+        project_name: projectName,
+        project_id: projectID,
+      })
+      .then((response) => {
+        if (response.data["success"] === true) {
+          setShowInventory(true);
+        } else {
+          if (response.data["success"] === false) {
+            setErrorMessage(
+              "Project not found. Please enter a different Project ID or create a new Project."
+            );
+            joinbtn.removeAttribute('disabled')
+            joinbtn.innerHTML = 'Join'
+          }
         }
-      }
-    });
+      });
   }
 
   if (showInventory) {

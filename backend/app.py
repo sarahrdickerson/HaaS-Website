@@ -30,19 +30,20 @@ def get_availability():
         "HWSet1_available": HWSet1_curr_available,
         "HWSet2_available": HWSet2_curr_available})
 
-@app.route('/api/checkin_HWSet1')
+@app.route('/api/checkin_HWSet1', methods=['POST'])
 def checkin_HWSet1():
     HWSet1_data = request.get_json()
-    qty = HWSet1_data['qty']
+    qty = int(HWSet1_data['qty'])
     collection = mongo_HWSet.db['HWSet1']
     document = collection.find_one({})
-    current_availability = document['available']
-    current_capacity = document['capacity']
+    current_availability = int(document['available'])
+    current_capacity = int(document['capacity'])
+
     if (qty > (current_capacity - current_availability)):
         return jsonify({"success":False, "message": "qty checked in exceeds capacity"})
     else:
         # does not exceed can proceed and update availability
-        collection.update_one({}, {'$set': {'availability': qty}})
+        collection.update_one({}, {'$set': {'available': qty + current_availability}})
         return jsonify({"success": True, "message":"hardware has been checked in"})
     
 
