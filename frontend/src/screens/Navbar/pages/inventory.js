@@ -99,7 +99,7 @@ function Inventory() {
               checkinbtn2.innerHTML = 'Check In'
             }
             if(response.data['message'] === "not enough checked out"){
-              set_hwset1_Message("Sorry, you only have " + response.data['checkedout'] + " hardware available to check in for this project.")
+              set_hwset2_Message("Sorry, you only have " + response.data['checkedout'] + " hardware available to check in for this project.")
               checkinbtn2.removeAttribute('disabled')
               checkinbtn2.innerHTML = 'Check In'
             }
