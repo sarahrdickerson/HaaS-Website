@@ -20,16 +20,30 @@ mongo_projects = PyMongo(
 mongo_HWSet = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
+# @app.route('/')
+# def index():
+#     return app.send_static_file('index.html')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
-@app.errorhandler(404)
-def not_found(e):
-    return app.send_static_file('index.html')
+# @app.errorhandler(404)
+# def not_found(e):
+#     return app.send_static_file('index.html')
+
+@app.route('/api/project-authorized-users', methods=['POST'])
+def return_project_authorized_users():
+    project_data = request.get_json()
+    project_name = project_data['project_name']
+    project_id = project_data['project_id']
+
+    projects_collection = mongo_projects.db[project_id]
+    project_document = projects_collection.find_one({})
+    authorized_users = project_document['users']
+    print(authorized_users)
+    return jsonify({"success": True, "authorized_users": authorized_users})
+
+
 
 @app.route('/api/availability')
 def get_availability():
@@ -241,6 +255,7 @@ def remove_user():
 @app.route('/api/login', methods=['POST'])
 def login():
     # get login data
+    print("hello im here!")
     username = request.get_json()['username']
     password = request.get_json()['password']
     userid = request.get_json()['userid']
