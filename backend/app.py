@@ -150,10 +150,10 @@ def checkin_HWSet2():
         if(qty > available):
             return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
         else:
-            HWSet1_checkedout = project['HWSet1_checkedout'] - qty
+            HWSet2_checkedout = project['HWSet2_checkedout'] - qty
             username_collection.update_one(
             {'project_id': project_id},
-            {'$set': {'HWSet2_checkedout': HWSet1_checkedout}})
+            {'$set': {'HWSet2_checkedout': HWSet2_checkedout}})
             collection.update_one(
             {}, {'$set': {'available': qty + current_availability}})
             return jsonify({"success": True, "message": "hardware has been checked in"})
