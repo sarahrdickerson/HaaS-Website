@@ -12,6 +12,7 @@ function PromptProjects() {
   const [projectID, setProjectID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userName, setUserName] = useState("");
+  const [currProjectID, setCurrProjectID] = useState("");
 
   const handleCreateClick = () => {
     const btn = document.querySelector(".create-button");
@@ -22,6 +23,7 @@ function PromptProjects() {
         project_name: projectName,
         project_id: projectID,
         users: [localStorage.getItem("username")],
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {
@@ -45,11 +47,13 @@ function PromptProjects() {
     const joinbtn = document.querySelector(".join-button");
     joinbtn.innerHTML = "Joining...";
     joinbtn.setAttribute("disabled", true);
+    console.log(localStorage.getItem("username"));
     axios
       .post("/api/joinProject", {
         project_name: projectName,
         project_id: projectID,
         user_id: localStorage.getItem("username"),
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {
@@ -71,7 +75,7 @@ function PromptProjects() {
   }
 
   if (showInventory) {
-    return <Inventory />;
+    return <Inventory/>;
   }
 
   return (
