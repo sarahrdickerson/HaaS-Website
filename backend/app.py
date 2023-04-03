@@ -78,13 +78,11 @@ def checkin_HWSet1():
     else:
         # does not exceed can proceed and update availability
         # but first check if user has enough to check in
-        #print(HWSet1_data)
+
         username = HWSet1_data['username']
         project_id = HWSet1_data['project_id']
         username_collection = mongo.db[username]
         project = username_collection.find_one({'project_id':project_id})
-        print(project_id)
-        print(project)
         available = project['HWSet1_checkedout']
         if(qty > available):
             return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
@@ -142,10 +140,23 @@ def checkin_HWSet2():
         return jsonify({"success": False, "message": "qty checked in exceeds capacity"})
     else:
         # does not exceed can proceed and update availability
-        collection.update_one(
+        # but first check if user has enough to check in
+        
+        username = HWSet2_data['username']
+        project_id = HWSet2_data['project_id']
+        username_collection = mongo.db[username]
+        project = username_collection.find_one({'project_id':project_id})
+        available = project['HWSet2_checkedout']
+        if(qty > available):
+            return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
+        else:
+            HWSet1_checkedout = project['HWSet1_checkedout'] - qty
+            username_collection.update_one(
+            {'project_id': project_id},
+            {'$set': {'HWSet2_checkedout': HWSet1_checkedout}})
+            collection.update_one(
             {}, {'$set': {'available': qty + current_availability}})
-        return jsonify({"success": True, "message": "hardware has been checked in"})
-
+            return jsonify({"success": True, "message": "hardware has been checked in"})
 
 @app.route('/api/checkout_HWSet2', methods=['POST'])
 def checkout_HWSet2():
@@ -191,14 +202,24 @@ def get_avail_HWSet1():
 # join project API and adds user to project if not already in project
 @app.route('/api/joinProject', methods=['POST'])
 def join_project():
-    project_data = request.get_json()
-    project_id = project_data['project_id']
-    user_id = project_data['user_id']
+    data = request.get_json()
+    project_id = data['project_id']
+    user_id = data['user_id']
 
     if project_id in mongo_projects.db.list_collection_names():
         if user_id not in mongo_projects.db[project_id].find_one({})['users']:
             mongo_projects.db[project_id].update_one(
                 {}, {'$push': {'users': user_id}})
+            # need to add project as doc to user collection
+            username = data['username']
+            user_collection = mongo.db[username]
+            new_project = {
+                "projecet_id":project_id,
+                "HWSet1_checkedout":0,
+                "HWSet2_checkedout":0
+            }
+
+            user_collection.insert_one(new_project)
             return jsonify({"success": True, "message": "user added to project"})
         else:
             return jsonify({"success": True, "message": "user already exists in project"})
