@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../api/axios";
+import Button from "@mui/material/Button";
 
 function Inventory() {
   const [hwSet1Availability, setHwSet1Availability] = useState(null);
@@ -9,6 +10,10 @@ function Inventory() {
   const [hwset1_message, set_hwset1_Message] = useState("");
   const [hwset2_message, set_hwset2_Message] = useState("");
   
+  const handleBackClick = () => {
+    window.location.href = "/projects";
+  };
+
   useEffect(() => {
     async function fetchAvailability() {
       try {
@@ -237,94 +242,117 @@ function Inventory() {
             max="100"
             value={hwSet1Input}
             onChange={handleHwSet1InputChange}
+            style={{ border: '1px solid black' }}
           />
-          <button
+          <Button
             className="hwset1-checkin-button"
             sx={{
               backgroundColor: 'lightgray',
               color: 'black',
               textTransform: 'none',
               borderRadius: '0',
-              width: '100px',
-              height: '50px',
-              fontSize: '1.2rem',
+              width: '75px',
+              height: '30px',
+              fontSize: '.7rem',
               marginLeft: '8px',
-              fontWeight: 'bold',
               textAlign: 'center'
             }}
             onClick={() => handleCheckIn("hwSet1", hwSet1Input)}
           >
             Check In
-          </button>
-          <button
+          </Button>
+          <Button
             className="hwset1-checkout-button"
             sx={{
               backgroundColor: 'lightgray',
               color: 'black',
               textTransform: 'none',
               borderRadius: '0',
-              width: '100px',
-              height: '50px',
-              fontSize: '1.2rem',
+              width: '75px',
+              height: '30px',
+              fontSize: '.7rem',
               marginLeft: '8px',
-              fontWeight: 'bold',
               textAlign: 'center'
             }}
             onClick={() => handleCheckOut("hwSet1", hwSet1Input)}
           >
             Check Out
-          </button>
+          </Button>
         </div>
         {hwset1_message && <p>{hwset1_message}</p>}
         <div>
           <h3 align="center">Hardware Set 2</h3>
           <p align="center">Availability: {hwSet2Availability}/100</p>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
           <input className="inventory-container"
             type="number"
             min="0"
             max="100"
             value={hwSet2Input}
             onChange={handleHwSet2InputChange}
+            style={{ border: '1px solid black' }}
           />
-          <button
+          <Button
             className="hwset2-checkin-button"
             sx={{
               backgroundColor: 'lightgray',
               color: 'black',
               textTransform: 'none',
               borderRadius: '0',
-              width: '100px',
-              height: '50px',
-              fontSize: '1.2rem',
+              width: '75px',
+              height: '30px',
+              fontSize: '.7rem',
               marginLeft: '8px',
-              fontWeight: 'bold',
               textAlign: 'center'
             }}
             onClick={() => handleCheckIn("hwSet2", hwSet2Input)}
           >
             Check In
-          </button>
-          <button
+          </Button>
+          <Button
             className="hwset2-checkout-button"
             sx={{
               backgroundColor: 'lightgray',
               color: 'black',
               textTransform: 'none',
               borderRadius: '0',
-              width: '100px',
-              height: '50px',
-              fontSize: '1.2rem',
+              width: '75px',
+              height: '30px',
+              fontSize: '.7rem',
               marginLeft: '8px',
-              fontWeight: 'bold',
               textAlign: 'center'
             }}
             onClick={() => handleCheckOut("hwSet2", hwSet2Input)}
           >
             Check Out
-          </button>
+          </Button>
+          </div>
         </div>
         {hwset2_message && <p >{hwset2_message}</p>}
       </div>
+
+      <div className="inventory-container">
+      <Button
+        className="back-button"
+        sx={{
+              backgroundColor: 'lightgray',
+              color: 'black',
+              textTransform: 'none',
+              fontWeight: 'bold',
+              borderRadius: '0',
+              width: '190px',
+              height: '50px',
+              fontSize: '1.1rem',
+              marginLeft: '8px',
+              textAlign: 'center'
+            }}
+
+        onClick={handleBackClick}
+      >
+        Back to Projects
+      </Button>
+    </div>
+
     </>
   );
 }
