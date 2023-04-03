@@ -12,7 +12,7 @@ from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 import os
 
-app = Flask(__name__, static_folder='./frontend/build', static_url_path='/')
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 mongo = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
 mongo_projects = PyMongo(
