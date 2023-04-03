@@ -12,7 +12,7 @@ from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 import os
 
-app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='../')
 mongo = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/Users')
 mongo_projects = PyMongo(
@@ -20,12 +20,16 @@ mongo_projects = PyMongo(
 mongo_HWSet = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
+# @app.route('/')
+# def index():
+#     return app.send_static_file('index.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.errorhandler(404)
 def not_found(e):
