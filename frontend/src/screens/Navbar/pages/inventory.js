@@ -37,7 +37,7 @@ function Inventory() {
         axios.post("/api/checkin_HWSet1", {
           qty: input,
           username: localStorage.getItem("username"),
-          project_id: localStorage.getItem("projectid")
+          project_id: localStorage.getItem("projectID")
         })
         .then((response) => {
           if(response.data['success'] === true){
@@ -78,7 +78,7 @@ function Inventory() {
         axios.post("/api/checkin_HWSet2", {
           qty: input,
           username: localStorage.getItem("username"),
-          project_id: localStorage.getItem("projectid")
+          project_id: localStorage.getItem("projectID")
         })
         .then((response) => {
           if(response.data['success'] === true){

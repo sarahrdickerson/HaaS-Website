@@ -188,19 +188,6 @@ def get_avail_HWSet1():
             {'availability_HWSet1': document['available'], 'capacity_HWSet1 ': 100})
     return jsonify(data)
 
-# HW set1 set availability
-@app.route('/api/set_HWSet1', methods=['POST'])
-def set_avail_HWSet1():
-    HWSet1_data = request.get_json()
-    HWSet1_avail = HWSet1_data['available']
-    print("Updating availability to:", HWSet1_avail)
-    result = mongo_HWSet.db.HWSet1.updateOne(
-        {'name': 'HWSet1'},
-        {'$set': {'available': HWSet1_avail}}
-    )
-    print(result)
-    return jsonify({"message": "Availability updated successfully"})
-
 # join project API and adds user to project if not already in project
 @app.route('/api/joinProject', methods=['POST'])
 def join_project():
