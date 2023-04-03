@@ -28,7 +28,8 @@ function PromptProjects() {
       .then((response) => {
         if (response.data["success"] === true) {
           setUserName(localStorage.getItem("username"));
-          setCurrProjectID(localStorage.setItem("projectid"));
+          localStorage.setItem('projectName', projectName);
+          localStorage.setItem('projectID', projectID);
           setShowInventory(true);
         } else {
           if (response.data["message"] === "project id already exists") {
@@ -57,6 +58,8 @@ function PromptProjects() {
         if (response.data["success"] === true) {
           setUserName(localStorage.getItem("username"));
           setShowInventory(true);
+          localStorage.setItem('projectName', projectName);
+          localStorage.setItem('projectID', projectID);
           window.location.href = "/inventory";
         } else {
           if (response.data["success"] === false) {

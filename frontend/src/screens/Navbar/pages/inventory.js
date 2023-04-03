@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import './inventory.css';
-import NavBarElements from '../navbarElements';
 import axios from "../../../api/axios";
 
 function Inventory() {
@@ -22,6 +20,7 @@ function Inventory() {
       }
     }
     fetchAvailability();
+    getProjectUsers();
   }, []);
 
     const handleCheckIn = (set, input) => {
@@ -187,8 +186,40 @@ function Inventory() {
     setHwSet2Input(event.target.value);
   };
 
+  const [authorizedUsers, setAuthorizedUsers] = useState([]);
+  const listAuthorizedUsers = authorizedUsers.map((user) => <p>{user}</p>);
+  async function getProjectUsers () {
+    const response = await axios.post('/api/project-authorized-users', {
+        project_name: localStorage.getItem('projectName'),
+        project_id: localStorage.getItem('projectID'),
+      }
+    ).then((response) => {
+      if(response.data['success'] === true){
+        setAuthorizedUsers(response.data['authorized_users'])
+        console.log(response.data['authorized_users'])
+
+      }
+    })
+  }
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+
   return (
     <>
+      <div>
+        <h1 align="center">
+          Inventory for Project ID: {localStorage.getItem('projectID')}
+        </h1>
+        <p align="center">
+          List of Authorized Users:
+          {listAuthorizedUsers}
+        </p>
+      </div>
       <div className="inventory-container">
         <h1 className="inventory-container">Inventory</h1>
         <div>

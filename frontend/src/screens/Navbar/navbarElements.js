@@ -70,7 +70,7 @@ const NavBarElements = () => {
                         Projects
                     </NavLink>
                     <NavLink to='/settings' activeStyle>
-                        Settings
+                        Profile
                     </NavLink>
                 </NavMenu>
             </Nav>
