@@ -20,16 +20,16 @@ mongo_projects = PyMongo(
 mongo_HWSet = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
-# @app.route('/')
-# def index():
-#     return app.send_static_file('index.html')
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
-# @app.errorhandler(404)
-# def not_found(e):
-#     return app.send_static_file('index.html')
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 @app.route('/api/project-authorized-users', methods=['POST'])
 def return_project_authorized_users():
@@ -276,5 +276,5 @@ def login():
         return jsonify({"success": False, "message": "Username does not exist"})
 
 
-if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+# if __name__ == '__main__':
+#     app.run(port=8000, debug=True)
