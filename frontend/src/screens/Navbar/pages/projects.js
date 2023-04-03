@@ -12,6 +12,7 @@ function PromptProjects() {
   const [projectID, setProjectID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userName, setUserName] = useState("");
+  const [currProjectID, setCurrProjectID] = useState("");
 
   const handleCreateClick = () => {
     const btn = document.querySelector(".create-button");
@@ -27,6 +28,7 @@ function PromptProjects() {
       .then((response) => {
         if (response.data["success"] === true) {
           setUserName(localStorage.getItem("username"));
+          setCurrProjectID(localStorage.setItem("projectid"));
           setShowInventory(true);
         } else {
           if (response.data["message"] === "project id already exists") {
@@ -44,6 +46,7 @@ function PromptProjects() {
     const joinbtn = document.querySelector(".join-button");
     joinbtn.innerHTML = "Joining...";
     joinbtn.setAttribute("disabled", true);
+    console.log(projectID)
     axios
       .post("/api/joinProject", {
         project_name: projectName,
@@ -68,7 +71,7 @@ function PromptProjects() {
   }
 
   if (showInventory) {
-    return <Inventory />;
+    return <Inventory/>;
   }
 
   return (

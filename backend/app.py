@@ -35,6 +35,8 @@ def get_availability():
         "HWSet2_available": HWSet2_curr_available})
 
 
+# check if there is enough room to check in hardware
+# check if user has the amount trying to check in
 @app.route('/api/checkin_HWSet1', methods=['POST'])
 def checkin_HWSet1():
     HWSet1_data = request.get_json()
@@ -50,9 +52,25 @@ def checkin_HWSet1():
         return jsonify({"success": False, "message": "qty checked in exceeds capacity"})
     else:
         # does not exceed can proceed and update availability
-        collection.update_one(
+        # but first check if user has enough to check in
+        #print(HWSet1_data)
+        username = HWSet1_data['username']
+        project_id = HWSet1_data['project_id']
+        username_collection = mongo.db[username]
+        project = username_collection.find_one({'project_id':project_id})
+        print(project_id)
+        print(project)
+        available = project['HWSet1_checkedout']
+        if(qty > available):
+            return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
+        else:
+            HWSet1_checkedout = project['HWSet1_checkedout'] - qty
+            username_collection.update_one(
+            {'project_id': project_id},
+            {'$set': {'HWSet1_checkedout': HWSet1_checkedout}})
+            collection.update_one(
             {}, {'$set': {'available': qty + current_availability}})
-        return jsonify({"success": True, "message": "hardware has been checked in"})
+            return jsonify({"success": True, "message": "hardware has been checked in"})
 
 
 @app.route('/api/checkout_HWSet1', methods=['POST'])
@@ -71,6 +89,16 @@ def checkout_HWSet1():
         # does not exceed can proceed and update availability
         collection.update_one(
             {}, {'$set': {'available': current_availability - qty}})
+        username = HWSet1_data['username']
+        project_id = HWSet1_data['project_id']
+        username_collection = mongo.db[username]
+
+        project = username_collection.find_one({'project_id':project_id})
+        HWSet1_checkedout = qty + project['HWSet1_checkedout']
+        username_collection.update_one(
+            {'project_id': project_id},
+            {'$set': {'HWSet1_checkedout': HWSet1_checkedout}}
+        )
         return jsonify({"success": True, "message": "hardware has been checked out"})
 
 
@@ -110,11 +138,21 @@ def checkout_HWSet2():
         # does not exceed can proceed and update availability
         collection.update_one(
             {}, {'$set': {'available': current_availability - qty}})
+        
+        # update user's project document that tracks checked in hardware
+        username = HWSet2_data['username']
+        project_id = HWSet2_data['project_id']
+        username_collection = mongo.db[username]
+
+        project = username_collection.find_one({'project_id':project_id})
+        HWSet1_checkedout = qty + project['HWSet2_checkedout']
+        username_collection.update_one(
+            {'project_id': project_id},
+            {'$set': {'HWSet2_checkedout': HWSet1_checkedout}}
+        )
         return jsonify({"success": True, "message": "hardware has been checked out"})
 
 # HW set1 get availability
-
-
 @app.route('/api/get_HWSet1')
 def get_avail_HWSet1():
     collection = mongo_HWSet.db.HWSet1
@@ -126,8 +164,6 @@ def get_avail_HWSet1():
     return jsonify(data)
 
 # HW set1 set availability
-
-
 @app.route('/api/set_HWSet1', methods=['POST'])
 def set_avail_HWSet1():
     HWSet1_data = request.get_json()
@@ -159,6 +195,8 @@ def join_project():
 
 
 # create project API
+# adds project to Projects database
+# adds project to username's collection to track checkedout HW
 @app.route('/api/createProject', methods=['POST'])
 def create_project():
     data = request.get_json()
