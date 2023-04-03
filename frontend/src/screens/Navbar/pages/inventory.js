@@ -196,7 +196,7 @@ function Inventory() {
     ).then((response) => {
       if(response.data['success'] === true){
         setAuthorizedUsers(response.data['authorized_users'])
-        console.log(response.data['authorized_users'])
+        //console.log(response.data['authorized_users'])
 
       }
     })

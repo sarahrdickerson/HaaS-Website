@@ -47,13 +47,13 @@ function PromptProjects() {
     const joinbtn = document.querySelector(".join-button");
     joinbtn.innerHTML = "Joining...";
     joinbtn.setAttribute("disabled", true);
-    console.log(projectID)
+    console.log(localStorage.getItem("username"));
     axios
       .post("/api/joinProject", {
         project_name: projectName,
         project_id: projectID,
         user_id: localStorage.getItem("username"),
-        user_name: localStorage.getItem("username")
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {

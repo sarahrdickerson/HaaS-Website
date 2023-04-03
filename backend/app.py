@@ -213,8 +213,9 @@ def join_project():
             # need to add project as doc to user collection
             username = data['username']
             user_collection = mongo.db[username]
+
             new_project = {
-                "projecet_id":project_id,
+                "project_id":project_id,
                 "HWSet1_checkedout":0,
                 "HWSet2_checkedout":0
             }
