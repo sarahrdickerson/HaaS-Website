@@ -20,16 +20,20 @@ mongo_projects = PyMongo(
 mongo_HWSet = PyMongo(
     app, uri='mongodb+srv://gabrielaperezgil:ECE461L@cluster0.5v3hp19.mongodb.net/HWSets')
 
-# @app.route('/')
-# def index():
-#     return app.send_static_file('index.html')
 
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
-# @app.errorhandler(404)
-# def not_found(e):
-#     return app.send_static_file('index.html')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
 
 @app.route('/api/project-authorized-users', methods=['POST'])
 def return_project_authorized_users():
@@ -42,7 +46,6 @@ def return_project_authorized_users():
     authorized_users = project_document['users']
     print(authorized_users)
     return jsonify({"success": True, "authorized_users": authorized_users})
-
 
 
 @app.route('/api/availability')
@@ -82,17 +85,17 @@ def checkin_HWSet1():
         username = HWSet1_data['username']
         project_id = HWSet1_data['project_id']
         username_collection = mongo.db[username]
-        project = username_collection.find_one({'project_id':project_id})
+        project = username_collection.find_one({'project_id': project_id})
         available = project['HWSet1_checkedout']
         if(qty > available):
-            return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
+            return jsonify({'success': False, 'message': 'not enough checked out', 'checkedout': available})
         else:
             HWSet1_checkedout = project['HWSet1_checkedout'] - qty
             username_collection.update_one(
-            {'project_id': project_id},
-            {'$set': {'HWSet1_checkedout': HWSet1_checkedout}})
+                {'project_id': project_id},
+                {'$set': {'HWSet1_checkedout': HWSet1_checkedout}})
             collection.update_one(
-            {}, {'$set': {'available': qty + current_availability}})
+                {}, {'$set': {'available': qty + current_availability}})
             return jsonify({"success": True, "message": "hardware has been checked in"})
 
 
@@ -116,7 +119,7 @@ def checkout_HWSet1():
         project_id = HWSet1_data['project_id']
         username_collection = mongo.db[username]
 
-        project = username_collection.find_one({'project_id':project_id})
+        project = username_collection.find_one({'project_id': project_id})
         HWSet1_checkedout = qty + project['HWSet1_checkedout']
         username_collection.update_one(
             {'project_id': project_id},
@@ -141,22 +144,23 @@ def checkin_HWSet2():
     else:
         # does not exceed can proceed and update availability
         # but first check if user has enough to check in
-        
+
         username = HWSet2_data['username']
         project_id = HWSet2_data['project_id']
         username_collection = mongo.db[username]
-        project = username_collection.find_one({'project_id':project_id})
+        project = username_collection.find_one({'project_id': project_id})
         available = project['HWSet2_checkedout']
         if(qty > available):
-            return jsonify({'success':False, 'message':'not enough checked out', 'checkedout':available})
+            return jsonify({'success': False, 'message': 'not enough checked out', 'checkedout': available})
         else:
             HWSet2_checkedout = project['HWSet2_checkedout'] - qty
             username_collection.update_one(
-            {'project_id': project_id},
-            {'$set': {'HWSet2_checkedout': HWSet2_checkedout}})
+                {'project_id': project_id},
+                {'$set': {'HWSet2_checkedout': HWSet2_checkedout}})
             collection.update_one(
-            {}, {'$set': {'available': qty + current_availability}})
+                {}, {'$set': {'available': qty + current_availability}})
             return jsonify({"success": True, "message": "hardware has been checked in"})
+
 
 @app.route('/api/checkout_HWSet2', methods=['POST'])
 def checkout_HWSet2():
@@ -174,13 +178,13 @@ def checkout_HWSet2():
         # does not exceed can proceed and update availability
         collection.update_one(
             {}, {'$set': {'available': current_availability - qty}})
-        
+
         # update user's project document that tracks checked in hardware
         username = HWSet2_data['username']
         project_id = HWSet2_data['project_id']
         username_collection = mongo.db[username]
 
-        project = username_collection.find_one({'project_id':project_id})
+        project = username_collection.find_one({'project_id': project_id})
         HWSet1_checkedout = qty + project['HWSet2_checkedout']
         username_collection.update_one(
             {'project_id': project_id},
@@ -189,6 +193,8 @@ def checkout_HWSet2():
         return jsonify({"success": True, "message": "hardware has been checked out"})
 
 # HW set1 get availability
+
+
 @app.route('/api/get_HWSet1')
 def get_avail_HWSet1():
     collection = mongo_HWSet.db.HWSet1
@@ -200,6 +206,8 @@ def get_avail_HWSet1():
     return jsonify(data)
 
 # join project API and adds user to project if not already in project
+
+
 @app.route('/api/joinProject', methods=['POST'])
 def join_project():
     data = request.get_json()
@@ -215,9 +223,9 @@ def join_project():
             user_collection = mongo.db[username]
 
             new_project = {
-                "project_id":project_id,
-                "HWSet1_checkedout":0,
-                "HWSet2_checkedout":0
+                "project_id": project_id,
+                "HWSet1_checkedout": 0,
+                "HWSet2_checkedout": 0
             }
 
             user_collection.insert_one(new_project)
@@ -252,9 +260,9 @@ def create_project():
         user_collection = mongo.db[username]
 
         new_project = {
-            "project_id" :project_id,
-            "HWSet1_checkedout":0,
-            "HWSet2_checkedout":0
+            "project_id": project_id,
+            "HWSet1_checkedout": 0,
+            "HWSet2_checkedout": 0
         }
 
         user_collection.insert_one(new_project)
@@ -264,6 +272,8 @@ def create_project():
 
 # this is a simple API that returns User Information data
 # this will be called by the react front end
+
+
 @app.route('/userdata')
 def get_user_data():
     collection = mongo.db.abhaysamant
@@ -340,5 +350,5 @@ def login():
         return jsonify({"success": False, "message": "Username does not exist"})
 
 
-if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+# if __name__ == '__main__':
+#     app.run(port=8000, debug=True)
