@@ -25,8 +25,7 @@
     "start-backend": "cd backend && venv/bin/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "cd .. && python backend/manage.py collectstatic --noinput && cd frontend && npm install && npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
