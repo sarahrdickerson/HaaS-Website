@@ -12,6 +12,7 @@ function PromptProjects() {
   const [projectID, setProjectID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userName, setUserName] = useState("");
+  const [currProjectID, setCurrProjectID] = useState("");
 
   const handleCreateClick = () => {
     const btn = document.querySelector(".create-button");
@@ -22,10 +23,13 @@ function PromptProjects() {
         project_name: projectName,
         project_id: projectID,
         users: [localStorage.getItem("username")],
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {
           setUserName(localStorage.getItem("username"));
+          localStorage.setItem('projectName', projectName);
+          localStorage.setItem('projectID', projectID);
           setShowInventory(true);
         } else {
           if (response.data["message"] === "project id already exists") {
@@ -43,16 +47,20 @@ function PromptProjects() {
     const joinbtn = document.querySelector(".join-button");
     joinbtn.innerHTML = "Joining...";
     joinbtn.setAttribute("disabled", true);
+    console.log(localStorage.getItem("username"));
     axios
       .post("/api/joinProject", {
         project_name: projectName,
         project_id: projectID,
         user_id: localStorage.getItem("username"),
+        username: localStorage.getItem("username")
       })
       .then((response) => {
         if (response.data["success"] === true) {
           setUserName(localStorage.getItem("username"));
           setShowInventory(true);
+          localStorage.setItem('projectName', projectName);
+          localStorage.setItem('projectID', projectID);
           window.location.href = "/inventory";
         } else {
           if (response.data["success"] === false) {
@@ -67,7 +75,7 @@ function PromptProjects() {
   }
 
   if (showInventory) {
-    return <Inventory />;
+    return <Inventory/>;
   }
 
   return (
