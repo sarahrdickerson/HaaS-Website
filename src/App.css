@@ -213,3 +213,10 @@ text-align: center;
   color: red;
   margin: 10px;
 }
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

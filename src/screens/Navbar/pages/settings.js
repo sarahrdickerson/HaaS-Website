@@ -23,28 +23,30 @@ const Settings = () => {
   return (
     <div>
       <NavBarElements />
-      <h1>Profile</h1>
-      <p>Username: {userName}</p>
-      <p>User ID: {userId}</p>
-      <Link to="/" style={{ textDecoration: 'none' }}>
-  <Button
-    sx={{
-      backgroundColor: 'lightgray',
-      color: 'black',
-      textTransform: 'none',
-      borderRadius: '0',
-      width: '100px',
-      height: '50px',
-      fontSize: '1.2rem',
-      marginLeft: '8px',
-      fontWeight: 'bold',
-      textAlign: 'center'
-    }}
-    onClick={handleLogout}
-  >
-    Logout
-  </Button>
-</Link>
+      <div className='settings-container'>
+        <h1 align="center" >Profile</h1>
+        <p align="center" >Username: {userName}</p>
+        <p align="center" >User ID: {userId}</p>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Button
+          sx={{
+            backgroundColor: 'lightgray',
+            color: 'black',
+            textTransform: 'none',
+            borderRadius: '0',
+            width: '100px',
+            height: '50px',
+            fontSize: '1.2rem',
+            marginLeft: '8px',
+            fontWeight: 'bold',
+            textAlign: 'center'
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+        </Link> 
+      </div>
     </div>
   );
 }
